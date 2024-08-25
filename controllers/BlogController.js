@@ -17,19 +17,22 @@ const getBlog = async (req, res) => {
 };
 
 
+
 const addBlog = async (req, res) => {
-    const { title, content } = req.body;
+    const { title, content } = req.body; 
     const imageFile = req.file;
-    const user_id = req.user.id;
+    const user_id = req.user.id; 
 
     try {
         let imageUrl = '';
 
         if (imageFile) {
+            // Upload image to Cloudinary
             const result = await cloudinary.uploader.upload(imageFile.path);
             imageUrl = result.secure_url;
         }
 
+        // Create a new blog entry in the database
         const newBlog = await Blog.create({
             title,
             content,
@@ -37,8 +40,10 @@ const addBlog = async (req, res) => {
             user_id,
         });
 
+        // Respond with the created blog entry
         res.status(201).json(newBlog);
     } catch (error) {
+        console.error('Failed to create blog:', error); // Log the error for debugging
         res.status(400).json({ error: 'Failed to create blog' });
     }
 };

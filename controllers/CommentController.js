@@ -72,12 +72,30 @@ const deleteComment = async (req, res) => {
 };
 
 const getComments = async (req, res) => {
+    const { userId } = req.params;
+
     try {
-        const comments = await Comment.findAll();
+        // Validate userId
+        if (!userId) {
+            return res.status(400).json({ error: 'User ID is required' });
+        }
+
+        // Fetch comments for the specified userId
+        const comments = await Comment.findAll({
+            where: { user_id: userId }
+        });
+
+        // Check if comments exist
+        if (comments.length === 0) {
+            return res.status(404).json({ message: 'No comments found for this user' });
+        }
+
         res.status(200).json(comments);
     } catch (error) {
+        console.error('Error fetching comments:', error);
         res.status(500).json({ error: 'Failed to fetch comments' });
     }
 };
+
 
 module.exports = { getComments, addComment, updateComment, deleteComment };

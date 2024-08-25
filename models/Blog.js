@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 const User = require('./User');
+const Comment = require('./Comment');
 
 const Blog = sequelize.define('Blog', {
     title: {
@@ -26,5 +27,6 @@ const Blog = sequelize.define('Blog', {
 }, {
     timestamps: true,
 });
+
 
 module.exports = Blog;

@@ -10,7 +10,7 @@ const Comment = sequelize.define('Comment', {
     },
     user_id: {
         type: DataTypes.INTEGER,
-        allowNull:false,
+        allowNull: false,
         references: {
             model: User,
             key: 'id',
@@ -19,7 +19,7 @@ const Comment = sequelize.define('Comment', {
     },
     blog_id: {
         type: DataTypes.INTEGER,
-        allowNull:false,
+        allowNull: false,
         references: {
             model: Blog,
             key: 'id',
@@ -29,5 +29,6 @@ const Comment = sequelize.define('Comment', {
 }, {
     timestamps: true,
 });
+
 
 module.exports = Comment;

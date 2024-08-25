@@ -3,10 +3,9 @@ const { body, validationResult } = require('express-validator');
 const { getBlog, addBlog, detailedBlog, updateBlog, deleteBlog } = require('../controllers/BlogController');
 const { protect } = require('../middleware/auth');
 const multer = require('multer');
-
-
 const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
+
 
 const validateBlog = [
     body('title')
@@ -18,14 +17,8 @@ const validateBlog = [
 ];
 
 router.route("/")
-    .get(getBlog)
-    .post(protect, upload.single('image'), validateBlog, (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        next();
-    }, addBlog);
+    .get(getBlog).post(protect,upload.single('image'), addBlog);
+
 
 router.route("/:id")
     .get(detailedBlog)
