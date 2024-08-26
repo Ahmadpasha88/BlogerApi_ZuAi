@@ -18,19 +18,30 @@ sequelize
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.error("Unable to connect to the database:", err));
 
-sequelize
-  .sync({ force: false })
-  .then(() => {
-    console.log("Database & tables created!");
-    app.listen(process.env.PORT || 5000, () => {
-        console.log(`Server running on port ${process.env.PORT || 5000}`);
-      });
+// sequelize
+//   .sync({ force: false })
+//   .then(() => {
+//     console.log("Database & tables created!");
+   
     
-  })
-  .catch((err) => {
-    console.error("Error synchronizing the database:", err);
+//   })
+//   .catch((err) => {
+//     console.error("Error synchronizing the database:", err);
+//   });
+
+  app.listen(process.env.PORT || 5000, () => {
+    console.log(`Server running on port ${process.env.PORT || 5000}`);
   });
 
+  app.get('/api/check-tables', async (req, res) => {
+    try {
+        const tables = await sequelize.getQueryInterface().showAllTables();
+        res.status(200).json(tables);
+    } catch (error) {
+        console.error("Error fetching tables:", error);
+        res.status(500).json({ message: "Failed to fetch tables" });
+    }
+});
   
 const userRoutes = require("./routes/UserRoutes");
 const blogRoutes = require("./routes/BlogPostsRoutes");
