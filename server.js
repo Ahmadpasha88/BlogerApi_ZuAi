@@ -18,21 +18,8 @@ sequelize
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.error("Unable to connect to the database:", err));
 
-// sequelize
-//   .sync({ force: false })
-//   .then(() => {
-//     console.log("Database & tables created!");
-   
-    
-//   })
-//   .catch((err) => {
-//     console.error("Error synchronizing the database:", err);
-//   });
 
-
-
-// Synchronize models with the database
-sequelize.sync({ force: true })
+sequelize.sync({ force: false })
     .then(() => {
         console.log("All models were synchronized successfully.");
     })
