@@ -29,6 +29,17 @@ sequelize
 //     console.error("Error synchronizing the database:", err);
 //   });
 
+
+
+// Synchronize models with the database
+sequelize.sync({ alter: true })
+    .then(() => {
+        console.log("All models were synchronized successfully.");
+    })
+    .catch((error) => {
+        console.error("Error synchronizing the database:", error);
+    });
+
   app.listen(process.env.PORT || 5000, () => {
     console.log(`Server running on port ${process.env.PORT || 5000}`);
   });
